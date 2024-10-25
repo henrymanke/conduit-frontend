@@ -21,7 +21,7 @@ export class ArticlesService {
     });
 
     return this.http.get<{ articles: Article[]; articlesCount: number }>(
-      "/articles" + (config.type === "feed" ? "/feed" : ""),
+      "/articles" + (config.type === "feed" ? "/feed/" : ""),
       { params },
     );
   }
@@ -38,7 +38,7 @@ export class ArticlesService {
 
   create(article: Partial<Article>): Observable<Article> {
     return this.http
-      .post<{ article: Article }>("/articles/", { article: article })
+      .post<{ article: Article }>("/articles", { article: article })
       .pipe(map((data) => data.article));
   }
 

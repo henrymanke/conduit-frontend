@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   selector: "app-favorite-button",
   template: `
     <button
-      class="btn btn-sm"
+      class="btn btn-sm m-1"
       [ngClass]="{
         disabled: isSubmitting,
         'btn-outline-primary': !article.favorited,
@@ -26,7 +26,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
       }"
       (click)="toggleFavorite()"
     >
-      <i class="ion-heart"></i> <ng-content></ng-content>
+      <ng-content></ng-content>
     </button>
   `,
   imports: [NgClass],

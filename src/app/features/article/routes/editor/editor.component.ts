@@ -81,23 +81,43 @@ export default class EditorComponent implements OnInit {
 
   submitForm(): void {
     this.isSubmitting = true;
-
-    // update any single tag
+  
+    // Update any single tag
     this.addTag();
-
-    // post the changes
-    this.articleService
-      .create({
-        ...this.articleForm.value,
-        tagList: this.tagList,
-      })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (article) => this.router.navigate(["/article/", article.slug]),
-        error: (err) => {
-          this.errors = err;
-          this.isSubmitting = false;
-        },
-      });
+  
+    const articleData = {
+      ...this.articleForm.value,
+      tagList: this.tagList,
+    };
+  
+    // Retrieve the slug from the route params
+    const slug = this.route.snapshot.params["slug"];
+  
+    if (slug) {
+      // Call the update method with the slug
+      this.articleService
+        .update({ ...articleData, slug })
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (article) => this.router.navigate(["/article/", article.slug]),
+          error: (err) => {
+            this.errors = err;
+            this.isSubmitting = false;
+          },
+        });
+    } else {
+      // If no slug is present, create a new article
+      this.articleService
+        .create(articleData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (article) => this.router.navigate(["/article/", article.slug]),
+          error: (err) => {
+            this.errors = err;
+            this.isSubmitting = false;
+          },
+        });
+    }
   }
+  
 }

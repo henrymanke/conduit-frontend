@@ -1,40 +1,40 @@
 <div class="editor-page">
-  <div class="container page">
-    <div class="row">
+  <div class="container my-3">
+    <div class="row justify-content-center">
       <div class="col-md-10 offset-md-1 col-xs-12">
-        <app-list-errors [errors]="errors" />
+        <h1 class="text-center my-5">Write an Article</h1>
+        <app-list-errors [errors]="errors"></app-list-errors>
 
         <form [formGroup]="articleForm">
           <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group">
+            <div class="mb-3">
               <input
                 class="form-control form-control-lg"
                 formControlName="title"
                 type="text"
                 placeholder="Article Title"
               />
-            </fieldset>
+            </div>
 
-            <fieldset class="form-group">
+            <div class="mb-3">
               <input
                 class="form-control"
                 formControlName="description"
                 type="text"
                 placeholder="What's this article about?"
               />
-            </fieldset>
+            </div>
 
-            <fieldset class="form-group">
+            <div class="mb-3">
               <textarea
                 class="form-control"
                 formControlName="body"
                 rows="8"
                 placeholder="Write your article (in markdown)"
-              >
-              </textarea>
-            </fieldset>
+              ></textarea>
+            </div>
 
-            <fieldset class="form-group">
+            <div class="mb-3">
               <input
                 class="form-control"
                 type="text"
@@ -42,18 +42,18 @@
                 [formControl]="tagField"
                 (keyup.enter)="addTag()"
               />
-              <div class="tag-list">
+              <div class="tag-list mt-2">
+                <!-- Tags Loop -->
                 @for (tag of tagList; track tag) {
-                  <span class="tag-default tag-pill">
-                    <i class="ion-close-round" (click)="removeTag(tag)"></i>
-                    {{ tag }}
+                  <span class="badge bg-secondary me-2">
+                    <i class="bi bi-x-circle" (click)="removeTag(tag)"></i> {{ tag }}
                   </span>
                 }
               </div>
-            </fieldset>
+            </div>
 
             <button
-              class="btn btn-lg pull-xs-right btn-primary"
+              class="btn btn-lg btn-primary float-end"
               type="button"
               (click)="submitForm()"
             >

@@ -10,32 +10,48 @@ import { AsyncPipe, DatePipe, NgIf } from "@angular/common";
   selector: "app-article-comment",
   template: `
     @if (comment) {
-      <div class="card">
-        <div class="card-block">
+      <div class="card mb-3">
+        <div class="card-body">
           <p class="card-text">
             {{ comment.body }}
           </p>
         </div>
-        <div class="card-footer">
+        <div class="card-footer d-flex align-items-center">
+          <!-- Comment author image -->
           <a
-            class="comment-author"
+            class="comment-author me-2"
             [routerLink]="['/profile', comment.author.username]"
           >
-            <img [src]="comment.author.image" class="comment-author-img" />
+            <img
+              [src]="comment.author.image"
+              class="rounded-circle"
+              style="width: 30px; height: 30px;"
+              alt="Author's profile picture"
+            />
           </a>
-          &nbsp;
+          
+          <!-- Comment author name -->
           <a
-            class="comment-author"
+            class="comment-author fw-bold me-auto"
             [routerLink]="['/profile', comment.author.username]"
           >
             {{ comment.author.username }}
           </a>
-          <span class="date-posted">
-            {{ comment.createdAt | date: "longDate" }}
+
+          <!-- Date posted -->
+          <span class="text-muted me-3">
+            {{ comment.createdAt | date: 'longDate' }}
           </span>
+
+          <!-- Trash icon for deleting the comment, only shown if canModify is true -->
           @if (canModify$ | async) {
             <span class="mod-options">
-              <i class="ion-trash-a" (click)="delete.emit(true)"></i>
+              <i
+                class="bi bi-trash-fill text-danger"
+                style="cursor: pointer;"
+                (click)="delete.emit(true)"
+                title="Delete comment"
+              ></i>
             </span>
           }
         </div>

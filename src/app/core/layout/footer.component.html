@@ -1,11 +1,11 @@
-<footer>
-  <div class="container">
+<footer class="py-3 bg-primary-subtle">
+  <div class="container text-center">
     <a class="logo-font" routerLink="/">conduit</a>
-    <span class="attribution">
-      &copy; {{ today | date: "yyyy" }}. An interactive learning project from
-      <a href="https://github.com/gothinkster/realworld"
-        >RealWorld OSS Project</a
-      >. Code licensed under MIT.
-    </span>
+    <p class="attribution text-muted mt-2">
+      &copy; {{ today | date: 'yyyy' }}. An interactive learning project from
+      <a href="https://github.com/gothinkster/realworld" target="_blank" class="text-reset">
+        RealWorld OSS Project
+      </a>. Code licensed under MIT.
+    </p>
   </div>
 </footer>

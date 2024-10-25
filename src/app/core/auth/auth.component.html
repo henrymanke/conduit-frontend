@@ -1,13 +1,13 @@
 <div class="auth-page">
-  <div class="container page">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 col-xs-12">
-        <h1 class="text-xs-center">{{ title }}</h1>
-        <p class="text-xs-center">
+  <div class="container my-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <h1 class="text-center">{{ title }}</h1>
+        <p class="text-center">
+          <!-- Conditional rendering for login/register links -->
           @if (authType === "register") {
             <a [routerLink]="['/login']">Have an account?</a>
           }
-
           @if (authType === "login") {
             <a [routerLink]="['/register']">Need an account?</a>
           }
@@ -15,39 +15,52 @@
         <app-list-errors [errors]="errors" />
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group">
-              @if (authType === "register") {
+            
+            <!-- Conditional username field for registration -->
+            @if (authType === "register") {
+              <fieldset class="mb-3">
                 <input
                   formControlName="username"
                   placeholder="Username"
                   class="form-control form-control-lg"
                   type="text"
+                  autocomplete="username"
                 />
-              }
-            </fieldset>
-            <fieldset class="form-group">
+              </fieldset>
+            }
+
+            <!-- Email field -->
+            <fieldset class="mb-3">
               <input
                 formControlName="email"
                 placeholder="Email"
                 class="form-control form-control-lg"
-                type="text"
+                type="email"
+                autocomplete="email"
               />
             </fieldset>
-            <fieldset class="form-group">
+
+            <!-- Password field -->
+            <fieldset class="mb-3">
               <input
                 formControlName="password"
                 placeholder="Password"
                 class="form-control form-control-lg"
                 type="password"
+                autocomplete="current-password"
               />
             </fieldset>
+
+            <!-- Submit button -->
             <button
-              class="btn btn-lg btn-primary pull-xs-right"
+              class="btn btn-lg btn-primary w-100"
               [disabled]="!authForm.valid"
               type="submit"
             >
               {{ title }}
+              <i class="bi bi-send ms-2"></i> <!-- Bootstrap Icon for login -->
             </button>
+
           </fieldset>
         </form>
       </div>
