@@ -27,8 +27,15 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
       }"
       (click)="toggleFollowing()"
     >
-      <i class="ion-plus-round"></i>
-      &nbsp;
+    <i 
+      class="bi"
+      [ngClass]="{
+        disabled: isSubmitting,
+        'bi-plus-circle': !profile.following,
+        'bi-dash-circle': profile.following
+      }"
+    ></i>
+
       {{ profile.following ? "Unfollow" : "Follow" }} {{ profile.username }}
     </button>
   `,

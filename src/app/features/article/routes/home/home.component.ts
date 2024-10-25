@@ -36,6 +36,11 @@ export default class HomeComponent implements OnInit {
   tagsLoaded = false;
   destroyRef = inject(DestroyRef);
 
+  words: string[] = ['knowledge', 'experience', 'ideas', 'stories', 'skills', 'inspiration', 'creativity', 'perspectives', 'insights', 'thoughts'];
+  currentWord: string = this.words[0];
+  wordIndex: number = 0;
+  intervalId: any;
+
   constructor(
     private readonly router: Router,
     private readonly userService: UserService,
@@ -56,6 +61,8 @@ export default class HomeComponent implements OnInit {
       .subscribe(
         (isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated),
       );
+
+      this.startWordRotation();
   }
 
   setListTo(type: string = "", filters: Object = {}): void {
@@ -67,5 +74,18 @@ export default class HomeComponent implements OnInit {
 
     // Otherwise, set the list object
     this.listConfig = { type: type, filters: filters };
+  }
+
+  startWordRotation(): void {
+    this.intervalId = setInterval(() => {
+      this.wordIndex = (this.wordIndex + 1) % this.words.length;
+      this.currentWord = this.words[this.wordIndex];
+    }, 7000); // Change word every 7 seconds
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 }

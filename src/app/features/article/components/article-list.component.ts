@@ -11,18 +11,24 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   selector: "app-article-list",
   template: `
     @if (loading === LoadingState.LOADING) {
-      <div class="article-preview">Loading articles...</div>
+      <div class="d-flex justify-content-center article-preview">
+        <div class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     }
 
     @if (loading === LoadingState.LOADED) {
+      <!-- Iterate through articles and display the preview -->
       @for (article of results; track article.slug) {
         <app-article-preview [article]="article" />
       } @empty {
         <div class="article-preview">No articles are here... yet.</div>
       }
 
-      <nav>
-        <ul class="pagination">
+      <!-- Pagination section -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
           @for (pageNumber of totalPages; track pageNumber) {
             <li
               class="page-item"
@@ -88,7 +94,7 @@ export class ArticleListComponent {
         this.loading = LoadingState.LOADED;
         this.results = data.articles;
 
-        // Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
+        // Create total pages array
         this.totalPages = Array.from(
           new Array(Math.ceil(data.articlesCount / this.limit)),
           (val, index) => index + 1,

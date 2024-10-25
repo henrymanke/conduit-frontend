@@ -1,23 +1,26 @@
 <div class="home-page">
+  <!-- Banner section, only shown if not authenticated -->
   <div class="banner" *ifAuthenticated="false">
-    <div class="container">
-      <h1 class="logo-font">conduit</h1>
-      <p>A place to share your <i>Angular</i> knowledge.</p>
+    <div class="text-center py-5 text-primary bg-primary-subtle mb-3 shadow-sm">
+      <p class="lead">A place to share your <i>{{ currentWord }}</i>.</p>
+
     </div>
   </div>
 
-  <div class="container page">
+  <!-- Main content section -->
+  <div class="container page my-3">
     <div class="row">
+      <!-- Article feed column -->
       <div class="col-md-9">
-        <div class="feed-toggle">
-          <ul class="nav nav-pills outline-active">
+        <div class="feed-toggle mb-3">
+          <ul class="nav nav-underline">
             <li class="nav-item">
               <a
                 class="nav-link"
                 [ngClass]="{ active: listConfig.type === 'feed' }"
                 (click)="setListTo('feed')"
               >
-                Your Feed
+                Followed
               </a>
             </li>
             <li class="nav-item">
@@ -28,12 +31,12 @@
                 }"
                 (click)="setListTo('all')"
               >
-                Global Feed
+                Global
               </a>
             </li>
             <li class="nav-item" [hidden]="!listConfig.filters.tag">
               <a class="nav-link active">
-                <i class="ion-pound"></i> {{ listConfig.filters.tag }}
+                <i class="bi bi-hash"></i> {{ listConfig.filters.tag }}
               </a>
             </li>
           </ul>
@@ -42,24 +45,32 @@
         <app-article-list [limit]="10" [config]="listConfig" />
       </div>
 
+      <!-- Sidebar with popular tags -->
       <div class="col-md-3" *rxLet="tags$; let tags">
-        <div class="sidebar">
-          <p>Popular Tags</p>
+        <div class="sidebar text-primary p-2 rounded-3 border border-primary">
+          <p class="fs-6 text-center"><i class="bi bi-bookmark-star"></i> Popular Tags</p>
 
-          <div class="tag-list">
+          <div class="tag-list d-flex flex-wrap">
+            <!-- Loop through tags and display as pills -->
             @for (tag of tags; track tag) {
               <a
-                class="tag-default tag-pill"
+                class="badge rounded-pill bg-primary-subtle m-1 text-primary text-decoration-none"
                 (click)="setListTo('all', { tag: tag })"
               >
-                {{ tag }}
+                #{{ tag }}
               </a>
             }
           </div>
 
-          <div [hidden]="tagsLoaded">Loading tags...</div>
+          <!-- Loading state -->
+          <div class="d-flex justify-content-center" [hidden]="tagsLoaded">
+            <div class="spinner-grow text-primary" [hidden]="tagsLoaded"role="status">
+              <span class="visually-hidden" [hidden]="tagsLoaded">Loading...</span>
+            </div>
+          </div>
 
-          <div [hidden]="!tagsLoaded || tags.length > 0">
+          <!-- No tags available message -->
+          <div class="text-muted" [hidden]="!tagsLoaded || tags.length > 0">
             No tags are here... yet.
           </div>
         </div>

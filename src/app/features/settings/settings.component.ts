@@ -48,10 +48,15 @@ export default class SettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.settingsForm.patchValue(
-      this.userService.getCurrentUser() as Partial<User>,
-    );
+    this.userService.currentUser
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((user: User | null) => {
+        if (user) {
+          this.settingsForm.patchValue(user);
+        }
+      });
   }
+  
 
   logout(): void {
     this.userService.logout();
@@ -60,15 +65,21 @@ export default class SettingsComponent implements OnInit {
   submitForm() {
     this.isSubmitting = true;
 
+    // Log the form values to ensure the image URL is included
+    console.log(this.settingsForm.value);
+
     this.userService
       .update(this.settingsForm.value)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: ({ user }) =>
-          void this.router.navigate(["/profile/", user.username]),
+        next: ({ user }) => {
+          console.log('API response:', user);  // Log the response to check the updated user data
+          void this.router.navigate(["/profile/", user.username]);
+        },
         error: (err) => {
           this.errors = err;
           this.isSubmitting = false;
+          console.error('Update error:', err);  // Log the error if the update fails
         },
       });
   }

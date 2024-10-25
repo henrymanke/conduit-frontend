@@ -1,24 +1,29 @@
 @if (profile) {
   <div class="profile-page">
-    <div class="user-info">
+    <!-- User Info Section -->
+    <div class="user-info py-4 ">
       <div class="container">
-        <div class="row">
-          <div class="col-xs-12 col-md-10 offset-md-1">
-            <img [src]="profile.image" class="user-img" />
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10 text-center">
+            <img [src]="profile.image" class="user-img rounded-circle mb-3" alt="Profile Image" style="width: 100px; height: 100px;" />
             <h4>{{ profile.username }}</h4>
-            <p>{{ profile.bio }}</p>
+            <p class="text-muted">{{ profile.bio }}</p>
+            
+            <!-- Follow Button for Non-User -->
             @if (!isUser) {
               <app-follow-button
                 [profile]="profile"
                 (toggle)="onToggleFollowing($event)"
-              />
+              ></app-follow-button>
             }
+            
+            <!-- Edit Profile Button for Current User -->
             @if (isUser) {
               <a
                 [routerLink]="['/settings']"
-                class="btn btn-sm btn-outline-secondary action-btn"
+                class="btn btn-sm btn-outline-secondary action-btn mt-2"
               >
-                <i class="ion-gear-a"></i> Edit Profile Settings
+                <i class="bi bi-gear"></i> Edit Profile Settings
               </a>
             }
           </div>
@@ -26,11 +31,13 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-md-10 offset-md-1">
+    <!-- Articles Section -->
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
           <div class="articles-toggle">
-            <ul class="nav nav-pills outline-active">
+            <ul class="nav nav-pills mb-3">
+              <!-- My Posts Tab -->
               <li class="nav-item">
                 <a
                   class="nav-link"
@@ -41,6 +48,7 @@
                   My Posts
                 </a>
               </li>
+              <!-- Favorited Posts Tab -->
               <li class="nav-item">
                 <a
                   class="nav-link"
@@ -54,6 +62,7 @@
             </ul>
           </div>
 
+          <!-- Dynamic content based on route -->
           <router-outlet></router-outlet>
         </div>
       </div>
