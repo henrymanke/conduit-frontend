@@ -13,8 +13,12 @@ RUN npm install
 # Copy all other files
 COPY . .
 
-# Build the Angular app
-RUN npm run build --prod
+# Set default environment variable for build configuration
+ARG NG_ENV=production
+ENV NG_ENV=$NG_ENV
+
+# Build the Angular app TODO: issue: works only for development
+RUN npm run build -- --configuration=${NG_ENV}
 
 ## Stage 2: Production Stage
 FROM nginx:alpine
