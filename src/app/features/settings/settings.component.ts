@@ -66,20 +66,20 @@ export default class SettingsComponent implements OnInit {
     this.isSubmitting = true;
 
     // Log the form values to ensure the image URL is included
-    console.log(this.settingsForm.value);
+    // console.log(this.settingsForm.value);
 
     this.userService
       .update(this.settingsForm.value)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: ({ user }) => {
-          console.log('API response:', user);  // Log the response to check the updated user data
+          // console.log('API response:', user);  // Log the response to check the updated user data
           void this.router.navigate(["/profile/", user.username]);
         },
         error: (err) => {
           this.errors = err;
           this.isSubmitting = false;
-          console.error('Update error:', err);  // Log the error if the update fails
+          // console.error('Update error:', err);  // Log the error if the update fails
         },
       });
   }
