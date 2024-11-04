@@ -23,7 +23,7 @@ ARG BACKEND_PORT=8007
 RUN echo "export const environment = { \
   production: true, \
   apiUrl: 'http://${BACKEND_HOST}:${BACKEND_PORT}/api' \
-};" > src/environments/environment.prod.ts
+};" > ./src/environments/environment.prod.ts
 
 # Build the Angular app TODO: issue: works only for development
 RUN npm run build -- --configuration=${NG_ENV}
