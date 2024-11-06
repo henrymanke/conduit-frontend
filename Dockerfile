@@ -10,20 +10,32 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install
 
+# Install Angular CLI
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm install
+
 # Copy all other files
 COPY . .
 
 # Set default environment variable for build configuration
-ARG NG_ENV=production
-ENV NG_ENV=$NG_ENV
+# Define build arguments
+ARG BACKEND_HOST=backend \
+  BACKEND_PORT=8007 \
+  NG_ENV=production
+
+
+# Set environment variables for Angular build
+ENV BACKEND_HOST=${BACKEND_HOST} \
+  BACKEND_PORT=${BACKEND_PORT} \
+  NG_ENV=${NG_ENV}
 
 # Create the environment.prod.ts with dynamic values
-ARG BACKEND_HOST=backend
-ARG BACKEND_PORT=8007
 RUN echo "export const environment = { \
   production: true, \
   apiUrl: 'http://${BACKEND_HOST}:${BACKEND_PORT}/api' \
-};" > src/environments/environment.prod.ts
+};" > ./src/environments/environment.prod.ts
 
 # Build the Angular app TODO: issue: works only for development
 RUN npm run build -- --configuration=${NG_ENV}
