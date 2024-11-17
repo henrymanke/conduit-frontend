@@ -22,7 +22,7 @@ COPY . .
 # Set default environment variable for build configuration
 # Define build arguments
 ARG BACKEND_HOST=backend \
-  BACKEND_PORT=8007 \
+  BACKEND_PORT=8000 \
   NG_ENV=production
 
 
