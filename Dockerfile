@@ -19,6 +19,14 @@ RUN npm config set fetch-retries 5 && \
 # Copy all other files
 COPY . .
 
+# Set default environment variable for build configuration
+# Define build arguments
+ARG NG_ENV=production
+
+
+# Set environment variable for Angular build
+ENV NG_ENV=${NG_ENV}
+
 # Build the Angular app TODO: issue: works only for development
 RUN npm run build -- --configuration=${NG_ENV}
 
