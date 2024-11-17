@@ -47,12 +47,7 @@ export class ArticlesService {
       .put<{ article: Article }>(`/articles/${article.slug}`, {
         article: article,
       })
-      .pipe(
-        map((data) => data.article),
-        tap((updatedArticle) => {
-          this.userService.setCurrentUser({ ...this.userService.getCurrentUser(), lastUpdatedArticle: updatedArticle });
-        })
-      );
+      .pipe(map((data) => data.article));
   }
 
   favorite(slug: string): Observable<Article> {
