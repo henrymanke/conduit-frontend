@@ -10,7 +10,7 @@ import { AsyncPipe, DatePipe, NgIf } from "@angular/common";
   selector: "app-article-comment",
   template: `
     @if (comment) {
-      <div class="card mb-3">
+      <div class="card mt-3">
         <div class="card-body">
           <p class="card-text">
             {{ comment.body }}
