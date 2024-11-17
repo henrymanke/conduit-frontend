@@ -75,7 +75,6 @@ const routes: Routes = [
     path: "article/:slug",
     loadComponent: () =>
       import("./features/article/routes/article/article.component"),
-    canActivate: [() => inject(UserService).isAuthenticated],
   },
 ];
 
