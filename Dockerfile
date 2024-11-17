@@ -23,7 +23,6 @@ COPY . .
 # Define build arguments
 ARG NG_ENV=production
 
-
 # Set environment variable for Angular build
 ENV NG_ENV=${NG_ENV}
 
