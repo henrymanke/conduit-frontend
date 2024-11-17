@@ -21,21 +21,21 @@ COPY . .
 
 # Set default environment variable for build configuration
 # Define build arguments
-ARG BACKEND_HOST=backend \
-  BACKEND_PORT=8000 \
-  NG_ENV=production
+# ARG BACKEND_HOST=backend \
+#   BACKEND_PORT=8000 \
+#   NG_ENV=production
 
 
-# Set environment variables for Angular build
-ENV BACKEND_HOST=${BACKEND_HOST} \
-  BACKEND_PORT=${BACKEND_PORT} \
-  NG_ENV=${NG_ENV}
+# # Set environment variables for Angular build
+# ENV BACKEND_HOST=${BACKEND_HOST} \
+#   BACKEND_PORT=${BACKEND_PORT} \
+#   NG_ENV=${NG_ENV}
 
-# Create the environment.prod.ts with dynamic values
-RUN echo "export const environment = { \
-  production: true, \
-  apiUrl: 'http://${BACKEND_HOST}:${BACKEND_PORT}/api' \
-};" > ./src/environments/environment.prod.ts
+# # Create the environment.prod.ts with dynamic values
+# RUN echo "export const environment = { \
+#   production: true, \
+#   apiUrl: 'http://${BACKEND_HOST}:${BACKEND_PORT}/api' \
+# };" > ./src/environments/environment.prod.ts
 
 # Build the Angular app TODO: issue: works only for development
 RUN npm run build -- --configuration=${NG_ENV}
