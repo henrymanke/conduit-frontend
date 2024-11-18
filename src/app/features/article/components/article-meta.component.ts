@@ -9,7 +9,7 @@ import { DatePipe } from "@angular/common";
     <div class="d-flex align-items-center mb-2 article-meta">
       <a [routerLink]="['/profile', article.author.username]">
         <img
-          [src]="article.author.image"
+          [src]="article.author?.image || 'assets/images/default-avatar.png'"
           alt="{{ article.author.username }}'s profile picture"
           class="rounded-circle me-2 shadow-sm"
           style="width: 48px; height: 48px;"
