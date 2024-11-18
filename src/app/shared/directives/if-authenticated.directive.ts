@@ -35,7 +35,7 @@ export class IfAuthenticatedDirective<T> implements OnInit {
         if ((authRequired || unauthRequired) && !this.hasView) {
           this.viewContainer.createEmbeddedView(this.templateRef);
           this.hasView = true;
-        } else if (this.hasView) {
+        } else if (!(authRequired || unauthRequired) && this.hasView) {
           this.viewContainer.clear();
           this.hasView = false;
         }
