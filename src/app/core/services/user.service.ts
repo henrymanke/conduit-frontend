@@ -50,11 +50,15 @@ export class UserService {
     return this.http.get<{ user: User }>("/user").pipe(
       tap({
         next: ({ user }) => this.setAuth(user),
-        error: () => this.purgeAuth(),
+        error: () => {
+          console.warn("Failed to fetch current user, purging auth.");
+          this.purgeAuth();
+        },
       }),
       shareReplay(1)
     );
   }
+  
 
   update(user: Partial<User>): Observable<{ user: User }> {
     return this.http.put<{ user: User }>("/user", { user }).pipe(
