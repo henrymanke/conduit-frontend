@@ -1,9 +1,15 @@
+Dockerfile
+docker-compose.yaml
+.vscode/
+.idea/
+*.iml
+*.tmp
+*.bak
+~*
 node_modules
 npm-debug.log
 dist
 .git
 .gitignore
 README.md
-Dockerfile
-docker-compose.yaml
 node_modules
